@@ -106,4 +106,33 @@ func main() {
 	fmt.Println(a_car.mph())
 
 	a_car = newer_top_speed(a_car, 500)
+
+	// looping
+	for i := 0; i < 10; i++{
+		fmt.Println(i)
+	}
+
+	j := 0
+	for j < 10 {//like while loop
+		fmt.Println(j)
+		if j > 7{
+			break
+		}
+		j++ // j+=1
+	}
+
+	//map
+	grades := make(map[string]float32) //key string, value float32. make is to let map have values
+	grades["Naga"] = 16
+	grades["Rama"] = 94
+	grades["Krishna"] = 68
+	fmt.Println(grades)
+
+	NagaGrade :=  grades["Naga"]
+	fmt.Println(NagaGrade)
+
+	for key, value := range grades{
+		fmt.Println(key,":", value)
+	}
+	delete(grades, "Naga")
 }
