@@ -13,3 +13,7 @@ Quick reference to my GoLang practice
 ```
 	gofmt basics.go
 ```
+4. using * make * we can create following things
+	* channel
+	* map with space preallocated
+	* slice with space preallocated or with len != cap 
