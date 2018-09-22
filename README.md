@@ -40,4 +40,8 @@ internally slice will create
 array[0:0]
 ```
 
-has length zero (and maybe even capacity zero) but its pointer is not nil, so it is not a nil slice
+has length zero (and maybe even capacity zero) but its pointer is not nil, so it is not a nil slice. An empty slice can grow (assuming it has non-zero capacity), but a nil slice has no array to put values in and can never grow to hold even one element. That said, a nil slice is functionally equivalent to a zero-length slice, even though it points to nothing. It has length zero and can be appended to, with allocation
+7. fmt.Printf
+	%x - hexa decimal
+	%q - quoted
+	%+q - The + flag causes the output to escape not only non-printable sequences, but also any non-ASCII bytes, all while interpreting UTF-8.
