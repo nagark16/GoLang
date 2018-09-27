@@ -55,3 +55,61 @@ has length zero (and maybe even capacity zero) but its pointer is not nil, so it
 	intChannel, ok := make(chan int, 2) // ok is false if there are no more values to receive and the channel is closed by sender
 ```
 10. Channels aren't like files; you don't usually need to close them. Closing is only necessary when the receiver must be told there are no more values coming, such as to terminate a range loop. 
+11. Accessing struct pointer is different
+```
+	type Vertex struct {
+		X int
+		Y int
+	}
+
+	func main() {
+		v := Vertex{1, 2}
+		p := &v
+		fmt.Println(p) // prints &{1 2}
+		p.X = 1e9
+		fmt.Println(p) // prints &{1000000000 2}
+		fmt.Println(v.X) // prints 1000000000
+		fmt.Println(p.X) // prints 1000000000 // we can access field of struct pointer p filed via p.X instead of (*p).X
+		fmt.Println((*p).X) // prints 1000000000
+		//fmt.Println(*p.X) // error
+	}
+
+```
+12. Struct literals: We can list just a subset of fields by using the Name: syntax. (And the order of named fields is irrelevant.) The special prefix & returns a pointer to the struct value. 
+```
+	type Vertex struct {
+		X, Y int
+	}
+
+	var (
+		v1 = Vertex{1, 2}  // has type Vertex
+		v2 = Vertex{X: 1}  // Y:0 is implicit
+		v3 = Vertex{}      // X:0 and Y:0
+		p  = &Vertex{1, 2} // has type *Vertex
+	)
+
+	func main() {
+		fmt.Println(v1, p, v2, v3) // {1 2} &{1 2} {1 0} {0 0}
+	}
+
+```
+13. Function Closures: A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables; in this sense the function is "bound" to the variables.
+```
+	func adder() func(int) int {
+		sum := 0
+		return func(x int) int {
+			sum += x
+			return sum
+		}
+	}
+
+	func main() {
+		pos, neg := adder(), adder()
+		for i := 0; i < 10; i++ {
+			fmt.Println(
+				pos(i),
+				neg(-2*i),
+			)
+		}
+	}
+```
