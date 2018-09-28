@@ -4,16 +4,21 @@
 	c. The method has two arguments, both exported (or builtin types).
 	d. The method’s second argument is a pointer (by declaring return type)
 	e. The method has return type error (after method signature closing brackets)
-///
-	type Task int (a)
-	func (t *Task)(a) MakeToDo(b)(todo ToDo, reply *ToDo)(d) error(e) {
+```
+	type Task int //(a)
+	func (t *Task) MakeToDo(todo ToDo, reply *ToDo) error {
 		todoSlice = append(todoSlice, todo)
 		*reply = todo
 		return nil
 	}
-///
+	func (t *Task) /*(a)*/ MakeToDo/*(b)*/(todo ToDo, reply *ToDo /*(d)*/ ) error /*(e)*/ {
+		todoSlice = append(todoSlice, todo)
+		*reply = todo
+		return nil
+	}
+```
 2. To call the above method
-///
+```
 	task := new(Task)
 	var err error
 	finishApp := ToDo{"Finish App", "Started"}
@@ -22,13 +27,13 @@
 	if err != nil {
 		log.Fatal("Issue making ToDo: ", err)
     }
-///
+```
 3. Exporting method should have 2 arguments. From documentation
 ```
 	The method’s first argument represents the arguments provided by the caller; the second argument represents the result parameters to be returned to the caller. The method’s return value, if non-nil, is passed back as a string that the client sees as if created by errors.New. If an error is returned, the reply parameter will not be sent back to the client.
 ```
 4. Server which exposes this methods acts as RPC server
-///
+```
 	task := new(Task)
 	
 	// Publish the receivers methods
@@ -52,9 +57,9 @@
 	if err != nil {
 		log.Fatal("Error serving: ", err)
 	}
-///
+```
 5. Client to make calls to server
-///
+```
 	var err error
 	var reply ToDo
 	// Create a TCP connection to localhost on port 1234
@@ -69,4 +74,4 @@
 
 	client.Call("Task.MakeToDo", finishApp, &reply)
 	client.Call("Task.MakeToDo", makeDinner, &reply)
-///
+```
