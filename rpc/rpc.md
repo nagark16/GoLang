@@ -5,19 +5,13 @@
 	d. The method’s second argument is a pointer (by declaring return type)
 	e. The method has return type error (after method signature closing brackets)
 ///
-	type Task int //(a)
-	func (t *Task) MakeToDo(todo ToDo, reply *ToDo) error {
-		todoSlice = append(todoSlice, todo)
-		*reply = todo
-		return nil
-	}
-	func (t *Task)/*(a)*/ MakeToDo/*(b)*/(todo ToDo, reply *ToDo/*(d)*/) error/*(e)*/ {
+	type Task int (a)
+	func (t *Task)(a) MakeToDo(b)(todo ToDo, reply *ToDo)(d) error(e) {
 		todoSlice = append(todoSlice, todo)
 		*reply = todo
 		return nil
 	}
 ///
-
 2. To call the above method
 ///
 	task := new(Task)
